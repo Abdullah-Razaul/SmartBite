@@ -1,0 +1,94 @@
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;  /* center cards */
+  padding: 20px;
+  background-color: #fafafa;
+}
+
+.food-card {
+  width: 300px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.food-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Reuse the same styles as before for image, discount, etc. */
+.card-image {
+  position: relative;
+}
+
+.card-image img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.food-card:hover img {
+  transform: scale(1.05);
+}
+
+.discount {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #e63946;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.favorite {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.favorite:hover {
+  background: #f4a261;
+  color: white;
+}
+
+.card-info {
+  padding: 12px 15px;
+}
+
+.card-info h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #f4a261;
+  margin: 6px 0;
+}
+
+.card-info p {
+  color: gray;
+  font-size: 0.9rem;
+  margin: 0;
+}
