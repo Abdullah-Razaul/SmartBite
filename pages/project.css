@@ -1,0 +1,179 @@
+/* Reset + Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: #fffaf5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Card Container */
+.miraz {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.logo img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+/* Headings and Text */
+h2 {
+  color: #333;
+  margin-bottom: 8px;
+}
+
+p {
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* Input Fields */
+form input {
+  width: 100%;
+  padding: 10px;
+  margin: 6px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: #555;
+  margin: 10px 0 20px;
+}
+
+.checkbox a {
+  color: #f57c00;
+  text-decoration: none;
+}
+
+.checkbox a:hover {
+  text-decoration: underline;
+}
+.checkbox input[type="checkbox"] {
+  margin: 0;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* Login options */
+.bite {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  margin: 10px 0 15px;
+  width: 100%;
+}
+.bite label {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* space between checkbox and text */
+  white-space: nowrap; /* keep on same line */
+}
+
+.bite a {
+  color: #f57c00;
+  text-decoration: none;
+}
+
+.bite a:hover {
+  text-decoration: underline;
+}
+
+/* Buttons */
+button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button[type="submit"] {
+  background: #f57c00;
+  color: #fff;
+}
+
+button[type="submit"]:hover {
+  background: #e66a00;
+}
+
+/* Links below buttons */
+.quick {
+  margin-top: 15px;
+  font-size: 13px;
+}
+
+.quick a {
+  color: #f57c00;
+  text-decoration: none;
+}
+
+.quick a:hover {
+  text-decoration: underline;
+}
+
+/* Divider and role buttons */
+.abd {
+  margin: 20px 0 10px;
+  color: #666;
+  font-size: 13px;
+}
+
+.rok {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rok button {
+  background: #eee;
+  color: #333;
+}
+
+.rok button:hover {
+  background: #ddd;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .miraz {
+    padding: 20px;
+  }
+
+  .input-group {
+    flex-direction: column;
+  }
+}
