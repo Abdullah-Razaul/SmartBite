@@ -52,7 +52,7 @@
 .hero {
   position: relative;
   height: 80vh;
-  background: url("/assets/home_background.png") no-repeat center center/cover;
+  background: url("home_background.png") no-repeat center center/cover;
   display: flex;
   justify-content:space-evenly;
   align-items:center;
