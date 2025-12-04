@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="bn">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Delivered Stats</title><link rel="stylesheet" href="style.css"></head>
+<body>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div style="font-size:28px">🍔</div><div><div style="font-weight:700">SmartBite</div></div></div>
+    <div class="nav"><a href="dashboard..html">Dashboard</a>
+      <a href="profile.html">Profile</a>
+      <a href="order-updatelist.html">Orders</a>
+      <a href="order_delivered.html" class="active">Delivered Stats</a>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar"><div><strong>Delivery Summary</strong><div class="small">Orders delivered over last 7 days</div></div><div></div></div>
+
+    <div class="stat" style="display:flex; gap:16px; align-items:center;">
+      <div style="flex:1;">
+        <div class="label">Total delivered</div>
+        <div class="number" style="font-size:28px; margin-top:6px;">342</div>
+        <div class="small" style="margin-top:8px;">This month</div>
+      </div>
+      <div style="width:420px;">
+        <!-- simple CSS bar chart -->
+        <div style="display:flex; gap:8px; align-items:end; height:120px;">
+          <div style="width:36px; background:linear-gradient(180deg,var(--accent),var(--accent-dark)); border-radius:6px; height:60px;"></div>
+          <div style="width:36px; background:linear-gradient(180deg,#ffad66,#ff7b00); border-radius:6px; height:90px;"></div>
+          <div style="width:36px; background:linear-gradient(180deg,#ffd6b3,#ffad66); border-radius:6px; height:48px;"></div>
+          <div style="width:36px; background:linear-gradient(180deg,#ffe9d6,#ffc88a); border-radius:6px; height:80px;"></div>
+          <div style="width:36px; background:linear-gradient(180deg,#ffb46a,#ff7b00); border-radius:6px; height:110px;"></div>
+        </div>
+        <div style="display:flex; gap:16px; justify-content:space-between; margin-top:10px; font-size:12px; color:var(--muted);">
+          <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Profile - SmartBite</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div style="font-size:28px">🍔</div><div><div style="font-weight:700">SmartBite</div><div style="font-size:13px;color:var(--muted)">Delivery Rider</div></div></div>
+    <div class="nav">
+      <a href="dashboard..html">Dashboard</a>
+      <a href="profile.html" class="active">Profile</a>
+      <a href="order-updatelist.html">Orders</a>
+      <a href="order_delivered.html">Delivered Stats</a>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div><strong>Profile</strong><div class="small">Update your information</div></div>
+      <div><button class="btn" onclick="alert('Edit not connected')">Edit</button></div>
+    </div>
+
+    <div class="grid">
+      <div class="profile-card" style="padding:22px; text-align:center;">
+        <div class="avatar">M</div>
+        <div style="font-weight:700; font-size:18px">Miraz</div>
+        <div class="small">Phone: 01XXXXXXXXX</div>
+        <div class="small">Vehicle: Bike</div>
+      </div>
+
+      <div class="profile-card" style="padding:18px;">
+        <h4 style="margin-bottom:10px;">Account Info</h4>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <label>Full name <input style="width:100%; padding:10px; border-radius:8px; border:1px solid #ececec;" value="Miraz"></label>
+          <label>Phone <input style="width:100%; padding:10px; border-radius:8px; border:1px solid #ececec;" value="01XXXXXXXXX"></label>
+          <label>Email <input style="width:100%; padding:10px; border-radius:8px; border:1px solid #ececec;" value="miraz@example.com"></label>
+          <button class="btn" style="margin-top:6px;">Save Changes</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

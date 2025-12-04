@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="bn">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Orders</title><link rel="stylesheet" href="style.css"></head>
+<body>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div style="font-size:28px">🍔</div><div><div style="font-weight:700">SmartBite</div></div></div>
+    <div class="nav">
+      <a href="dashboard..html">Dashboard</a>
+      <a href="profile.html">Profile</a>
+      <a href="order-updatelist.html" class="active">Orders</a>
+      <a href="order_delivered.html">Delivered Stats</a>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar"><div><strong>Orders</strong><div class="small">Manage your deliveries</div></div><div></div></div>
+
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <!-- reusing same order structure as dashboard -->
+      <div class="order">
+        <div class="meta"><div><strong>Order #1023</strong> — Rahim</div><div style="color:var(--muted)">23 Park Road</div></div>
+        <div class="actions"><div class="chip" style="background:#fff8e6;color:#b65a00;border:1px solid rgba(182,90,0,0.08)">Pending</div><a class="btn" href="order_update.html">Update</a></div>
+      </div>
+
+      <div class="order">
+        <div class="meta"><div><strong>Order #1025</strong> — Ayesha</div><div style="color:var(--muted)">Green Market</div></div>
+        <div class="actions"><div class="chip" style="background:#f0fff4;color:#1f8c44;border:1px solid rgba(31,140,68,0.08)">Delivered</div><a class="btn ghost" href="order_update.html">Details</a></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

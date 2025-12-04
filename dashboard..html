@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dashboard - SmartBite</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div style="font-size:28px">🍔</div>
+      <div>
+        <div style="font-weight:700">SmartBite</div>
+        <div style="font-size:13px;color:var(--muted)">Delivery Rider</div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <a href="dashboard..html" class="active">Dashboard</a>
+      <a href="profile.html">Profile</a>
+      <a href="order-updatelist.html">Orders</a>
+      <a href="order_delivered.html">Delivered Stats</a>
+      <a href="landing.html" onclick="alert('Logging out');">Logout</a>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <strong>Welcome, Miraz</strong>
+        <div class="small">Last seen: 2h ago</div>
+      </div>
+      <div>
+        <input placeholder="Search orders..." style="padding:8px 10px;border-radius:8px;border:1px solid #e8eaee;">
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="stat"><div class="label">Delivered</div><div class="number" id="deliveredCount">128</div></div>
+      <div class="stat"><div class="label">Active Orders</div><div class="number" id="activeCount">3</div></div>
+      <div class="stat"><div class="label">Earnings Today</div><div class="number">৳ 540</div></div>
+    </div>
+
+    <div style="margin-top:8px;">
+      <h3 style="margin-bottom:10px;">Incoming Orders</h3>
+
+      <div id="ordersList">
+        <!-- sample orders -->
+        <div class="order" data-id="1023">
+          <div class="meta">
+            <div><strong>Order #1023</strong> — Rahim</div>
+            <div style="color:var(--muted); font-size:13px">23, Park Road, 2.5km</div>
+          </div>
+          <div class="actions">
+            <div class="chip" style="background:#fff; border:1px solid #fde6d6; color:#b65a00">Pending</div>
+            <button class="btn" onclick="openUpdate('1023')">Update</button>
+          </div>
+        </div>
+
+        <div class="order" data-id="1024">
+          <div class="meta">
+            <div><strong>Order #1024</strong> — Sultana</div>
+            <div style="color:var(--muted); font-size:13px">House 8, Lakeview, 1.1km</div>
+          </div>
+          <div class="actions">
+            <div class="chip" style="background:#f0fff4; color:#1f8c44; border:1px solid rgba(31,140,68,0.08)">Picked</div>
+            <button class="btn" onclick="openUpdate('1024')">Update</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- modal -->
+<div id="modalBackdrop" class="modal-backdrop" style="display:none;">
+  <div class="modal" role="dialog" aria-modal="true">
+    <h3 id="modalTitle">Update Order</h3>
+    <div style="margin-top:8px;">
+      <div style="font-size:14px;color:var(--muted)" id="modalMeta">Order # — customer</div>
+
+      <div style="margin-top:12px;">
+        <label style="display:block; margin-bottom:8px;"><input type="radio" name="status" value="pending" checked> Pending</label>
+        <label style="display:block; margin-bottom:8px;"><input type="radio" name="status" value="picked"> Picked Up</label>
+        <label style="display:block; margin-bottom:8px;"><input type="radio" name="status" value="delivered"> Delivered</label>
+      </div>
+
+      <div style="margin-top:10px;">
+        <textarea id="updateNote" placeholder="Add a note (optional)" style="width:100%; padding:10px; border-radius:8px; border:1px solid #e8eaee;"></textarea>
+      </div>
+
+      <div style="display:flex; gap:8px; margin-top:12px;">
+        <button class="btn" id="saveUpdate">Save</button>
+        <button class="btn ghost" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let orders = {
+  "1023": {id:"1023", name:"Rahim", addr:"23, Park Road", status:"pending"},
+  "1024": {id:"1024", name:"Sultana", addr:"House 8, Lakeview", status:"picked"},
+};
+
+function openUpdate(id){
+  const o = orders[id];
+  document.getElementById('modalTitle').innerText = 'Update Order #' + id;
+  document.getElementById('modalMeta').innerText = o.name + ' — ' + o.addr;
+  // set radio
+  const rs = document.getElementsByName('status');
+  for(const r of rs){ r.checked = (r.value === o.status); }
+  document.getElementById('modalBackdrop').style.display = 'flex';
+  document.getElementById('saveUpdate').onclick = function(){ saveUpdate(id); };
+}
+
+function closeModal(){ document.getElementById('modalBackdrop').style.display = 'none'; }
+
+function saveUpdate(id){
+  const rs = document.getElementsByName('status');
+  let sel;
+  for(const r of rs){ if(r.checked) sel = r.value; }
+  // update data (demo)
+  orders[id].status = sel;
+  // update UI chip quickly
+  const node = document.querySelector('.order[data-id="'+id+'"] .chip');
+  if(sel === 'delivered'){ node.style.background = '#f0fff4'; node.style.color = '#1f8c44'; node.style.border='1px solid rgba(31,140,68,0.08)'; node.textContent = 'Delivered'; }
+  else if(sel === 'picked'){ node.style.background = '#fff8e6'; node.style.color = '#b65a00'; node.style.border='1px solid rgba(182,90,0,0.08)'; node.textContent = 'Picked'; }
+  else { node.style.background = '#fff'; node.style.color = '#b65a00'; node.style.border='1px solid rgba(255,123,0,0.06)'; node.textContent = 'Pending'; }
+
+  // if delivered, increment count (demo)
+  let delCountEl = document.getElementById('deliveredCount');
+  if(sel === 'delivered'){ delCountEl.innerText = parseInt(delCountEl.innerText) + 1; }
+  closeModal();
+}
+</script>
+
+</body>
+</html>
