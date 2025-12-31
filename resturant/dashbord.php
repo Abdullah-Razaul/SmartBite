@@ -1,3 +1,13 @@
+<?php
+session_start();
+if(!isset($_SESSION['owner_id'])){
+    header("Location: login.html");
+    exit();
+}
+include "../config/db.php";
+ // connect to database
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,6 +34,29 @@
             background: #FC9300;
             color: white;
             padding: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .layout {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                padding: 10px;
+            }
+            .sidebar h2 {
+                font-size: 1.2em;
+            }
+            .nav a {
+                display: inline-block;
+                margin-right: 15px;
+            }
+            .card-box {
+                flex-direction: column;
+            }
+            .main {
+                padding: 10px;
+            }
         }
 
         .sidebar h2 {
@@ -105,13 +138,14 @@
                 <a href="#">Dashboard</a>
                 <a href="#">Orders</a>
                 <a href="#">Profile</a>
+                <a href="#" onclick="logout()">Logout</a>
             </div>
         </div>
 
         <!-- Main Content -->
         <div class="main">
             <h1>Dashboard</h1>
-            <p>Welcome, Owner</p>
+            <p>Welcome, <?php echo htmlspecialchars($_SESSION['owner_name']); ?>!</p>
 
             <!-- upper card box -->
             <div class="card-box">
@@ -171,108 +205,94 @@
     </div>
 
     <script>
+let menu = [];
 
-        //   DATA menu
+// Fetch menu from database
+function fetchMenu() {
+    fetch('get_menu.php')
+    .then(res => res.json())
+    .then(data => {
+        menu = data;
+        showMenu();
+    })
+    .catch(err => {
+        console.log('Error fetching menu:', err);
+        alert('Failed to load menu. Please refresh the page.');
+    });
+}
 
+// Render menu
+function showMenu() {
+    let box = document.getElementById("menuList");
+    box.innerHTML = "";
+    menu.forEach(m=>{
+        box.innerHTML += `
+            <div class="menu-item">
+                <span>${m.name} - ৳${m.price}</span>
+                <button class="btn-small" onclick="deleteItem(${m.id})">Delete</button>
+            </div>
+        `;
+    });
+}
 
-        let menu = [
-            { id: 1, name: "Burger", price: 6 },
-            { id: 2, name: "Pizza", price: 4 },
-        ];
+// Add menu item
+function addMenuItem() {
+    let name = document.getElementById("newItem").value.trim();
+    let price = document.getElementById("newPrice").value.trim();
+    if(!name || !price) return alert("Please fill all fields");
 
-        let orders = [
-            { id: 101, items: ["Burger"], status: "pending" },
-            { id: 102, items: ["Fizza"], status: "preparing" }
-        ];
+    fetch('add_menu.php',{
+        method:'POST',
+        headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body:`name=${encodeURIComponent(name)}&price=${encodeURIComponent(price)}`
+    }).then(res=>res.json())
+      .then(data=>{
+          if(data.success){
+              fetchMenu(); // refresh
+              document.getElementById("newItem").value="";
+              document.getElementById("newPrice").value="";
+          } else {
+              alert(data.message || 'Failed to add item');
+          }
+      })
+      .catch(err => {
+          console.log('Error adding item:', err);
+          alert('Failed to add item. Please try again.');
+      });
+}
 
+// Delete menu item
+function deleteItem(id){
+    if (!confirm('Are you sure you want to delete this item?')) return;
 
-        //  RENDER MENU
+    fetch('delete_menu.php',{
+        method:'POST',
+        headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body:`id=${id}`
+    }).then(res=>res.json())
+      .then(data=>{
+          if(data.success) {
+              fetchMenu();
+          } else {
+              alert(data.message || 'Failed to delete item');
+          }
+      })
+      .catch(err => {
+          console.log('Error deleting item:', err);
+          alert('Failed to delete item. Please try again.');
+      });
+}
 
-        function showMenu() {
-            let box = document.getElementById("menuList");
-            box.innerHTML = "";
+// Initialize dashboard
+fetchMenu();
 
-            menu.forEach(m => {
-                box.innerHTML += `
-      <div class="menu-item">
-        <span>${m.name} - ৳{m.price}</span>
-        <button class="btn-small" onclick="deleteItem(${m.id})">Delete</button>
-      </div>
-    `;
-            });
-        }
+// Logout function
+function logout() {
+    if (confirm('Are you sure you want to logout?')) {
+        window.location.href = 'logout.php';
+    }
+}
 
-
-        //  ADD MENU ITEM
-
-        function addMenuItem() {
-            let name = document.getElementById("newItem").value;
-            let price = document.getElementById("newPrice").value;
-
-            if (name === "" || price === "") { alert("Fill both fields"); return; }
-
-            menu.push({
-                id: Date.now(),
-                name: name,
-                price: parseFloat(price)
-            });
-
-            document.getElementById("newItem").value = "";
-            document.getElementById("newPrice").value = "";
-
-            showMenu();
-        }
-
-        /* Delete menu item */
-        function deleteItem(id) {
-            menu = menu.filter(m => m.id !== id);
-            showMenu();
-        }
-
-
-        //  RENDER ORDERS
-
-        function showOrders() {
-            let tbody = document.querySelector("#orderTable tbody");
-            tbody.innerHTML = "";
-
-            orders.forEach(o => {
-                tbody.innerHTML += `
-      <tr>
-        <td>${o.id}</td>
-        <td>${o.items.join(", ")}</td>
-        <td>${o.status}</td>
-        <td><button class="btn" onclick="nextStatus(${o.id})">Next</button></td>
-      </tr>
-    `;
-            });
-
-            updateStats();
-        }
-
-        /* Change order status */
-        function nextStatus(id) {
-            let order = orders.find(o => o.id === id);
-
-            if (order.status === "pending") order.status = "preparing";
-            else if (order.status === "preparing") order.status = "ready";
-
-            showOrders();
-        }
-
-
-        //  UPDATE STAT BOXES
-
-        function updateStats() {
-            document.getElementById("todayOrders").innerText = orders.length;
-            document.getElementById("pending").innerText = orders.filter(o => o.status === "pending").length;
-            document.getElementById("preparing").innerText = orders.filter(o => o.status === "preparing").length;
-            document.getElementById("ready").innerText = orders.filter(o => o.status === "ready").length;
-        }
-
-        // /* Initialize */
-        // showMenu();
-        // showOrders();
     </script>
 
 </body>
